@@ -20,7 +20,7 @@ RUN apt-get update
 RUN apt-get install -y wget
 
 # get maven 3.3.9
-RUN wget --no-verbose -O /tmp/apache-maven-3.3.9.tar.gz http://apache.fayea.com/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+RUN wget -O /tmp/apache-maven-3.3.9.tar.gz http://apache.fayea.com/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 
 # verify checksum
 RUN echo "516923B3955B6035BA6B0A5B031FBD8B /tmp/apache-maven-3.3.9.tar.gz" | md5sum -c
@@ -47,7 +47,7 @@ ENV filename jdk-8u11-linux-x64.tar.gz
 ENV downloadlink http://download.oracle.com/otn-pub/java/jdk/8u11-b12/$filename
 
 # download java, accepting the license agreement
-RUN wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" -O /tmp/$filename $downloadlink 
+RUN wget --header "Cookie: oraclelicense=accept-securebackup-cookie" -O /tmp/$filename $downloadlink 
 
 # unpack java
 RUN mkdir /opt/java-oracle && tar -zxf /tmp/$filename -C /opt/java-oracle/
