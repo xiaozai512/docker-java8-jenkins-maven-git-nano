@@ -1,6 +1,6 @@
 # Ubuntu 14.04 LTS
 # Oracle Java 1.8.0_11 64 bit
-# Maven 3.3.9
+# Maven 3.5.3
 # Jenkins 2.19
 # git 1.9.1
 # Nano 2.2.6-1ubuntu1
@@ -8,7 +8,7 @@
 # extend the most recent long term support Ubuntu version
 FROM ubuntu:14.04
 
-MAINTAINER Stephen L. Reed (http://texai.org, stephenreed@yahoo.com)
+MAINTAINER wzkworld@gmail.com
 
 # this is a non-interactive automated build - avoid some warning messages
 ENV DEBIAN_FRONTEND noninteractive
@@ -19,17 +19,17 @@ RUN apt-get update
 # install wget
 RUN apt-get install -y wget
 
-# get maven 3.3.9
-RUN wget -O /tmp/apache-maven-3.3.9.tar.gz http://apache.fayea.com/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+# get maven 3.5.3
+RUN wget -O /tmp/apache-maven-3.5.3.tar.gz http://mirrors.shu.edu.cn/apache/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
 
 # verify checksum
-RUN echo "516923B3955B6035BA6B0A5B031FBD8B /tmp/apache-maven-3.3.9.tar.gz" | md5sum -c
+#RUN echo "516923B3955B6035BA6B0A5B031FBD8B /tmp/apache-maven-3.5.3.tar.gz" | md5sum -c
 
 # install maven
-RUN tar xzf /tmp/apache-maven-3.3.9.tar.gz -C /opt/
-RUN ln -s /opt/apache-maven-3.3.9 /opt/maven
+RUN tar xzf /tmp/apache-maven-3.5.3.tar.gz -C /opt/
+RUN ln -s /opt/apache-maven-3.5.3 /opt/maven
 RUN ln -s /opt/maven/bin/mvn /usr/local/bin
-RUN rm -f /tmp/apache-maven-3.3.9.tar.gz
+RUN rm -f /tmp/apache-maven-3.5.3.tar.gz
 ENV MAVEN_HOME /opt/maven
 
 # install git
