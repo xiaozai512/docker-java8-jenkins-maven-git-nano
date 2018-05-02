@@ -42,7 +42,7 @@ RUN apt-get install -y nano
 RUN apt-get clean
 
 # set shell variables for java installation
-ENV java_version 1.8.172
+ENV java_version 1.8.0_172
 ENV filename jdk-8u172-linux-x64.tar.gz
 ENV downloadlink http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/$filename
 
