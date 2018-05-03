@@ -30,6 +30,7 @@ RUN tar xzf /tmp/apache-maven-3.5.3.tar.gz -C /opt/
 RUN ln -s /opt/apache-maven-3.5.3 /opt/maven
 RUN ln -s /opt/maven/bin/mvn /usr/local/bin
 RUN rm -f /tmp/apache-maven-3.5.3.tar.gz
+ADD settings.xml /opt/apache-maven-3.5.3/conf/
 ENV MAVEN_HOME /opt/maven
 
 # install git
