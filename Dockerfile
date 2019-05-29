@@ -14,7 +14,7 @@ MAINTAINER wzkworld@gmail.com
 ENV DEBIAN_FRONTEND noninteractive
 
 # update dpkg repositories AND install wget git nano
-RUN apt-get update && apt-get install -y wget git nano && apt-get clean
+RUN apt-get update && apt-get install -y software-properties-common wget git nano && apt-get clean
 
 # get maven 3.5.4
 RUN wget -O /tmp/apache-maven-3.5.4.tar.gz http://mirror.bit.edu.cn/apache/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz
