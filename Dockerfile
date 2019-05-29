@@ -25,9 +25,7 @@ ADD settings.xml /opt/apache-maven-3.5.4/conf/
 ENV MAVEN_HOME /opt/maven
 
 # Install Java.
-RUN \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
+RUN add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -y oracle-java8-installer && \
   rm -rf /var/lib/apt/lists/* && \
