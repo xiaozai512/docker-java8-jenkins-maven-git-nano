@@ -1,6 +1,6 @@
 # Ubuntu 14.04 LTS
 # Oracle Java 1.8.172 64 bit
-# Maven 3.5.3
+# Maven 3.5.4
 # Jenkins 2.107.2
 # git 1.9.1
 # Nano 2.2.6-1ubuntu1
@@ -19,28 +19,16 @@ RUN apt-get update
 # install wget
 RUN apt-get install -y wget
 
-# get maven 3.5.3
-RUN wget -O /tmp/apache-maven-3.5.3.tar.gz http://mirrors.shu.edu.cn/apache/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
-
-# verify checksum
-#RUN echo "516923B3955B6035BA6B0A5B031FBD8B /tmp/apache-maven-3.5.3.tar.gz" | md5sum -c
+# get maven 3.5.4
+RUN wget -O /tmp/apache-maven-3.5.4.tar.gz http://mirror.bit.edu.cn/apache/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz
 
 # install maven
-RUN tar xzf /tmp/apache-maven-3.5.3.tar.gz -C /opt/
-RUN ln -s /opt/apache-maven-3.5.3 /opt/maven
-RUN ln -s /opt/maven/bin/mvn /usr/local/bin
-RUN rm -f /tmp/apache-maven-3.5.3.tar.gz
-ADD settings.xml /opt/apache-maven-3.5.3/conf/
+RUN tar xzf /tmp/apache-maven-3.5.4.tar.gz -C /opt/ && ln -s /opt/apache-maven-3.5.4 /opt/maven && ln -s /opt/maven/bin/mvn /usr/local/bin
+ADD settings.xml /opt/apache-maven-3.5.4/conf/
 ENV MAVEN_HOME /opt/maven
 
-# install git
-RUN apt-get install -y git
-
-# install nano
-RUN apt-get install -y nano
-
-# remove download archive files
-RUN apt-get clean
+# install git nano
+RUN apt-get install -y git nano && apt-get clean
 
 # set shell variables for java installation
 ENV java_version 1.8.0_172
