@@ -13,38 +13,28 @@ MAINTAINER wzkworld@gmail.com
 # this is a non-interactive automated build - avoid some warning messages
 ENV DEBIAN_FRONTEND noninteractive
 
-# update dpkg repositories
-RUN apt-get update 
-
-# install wget
-RUN apt-get install -y wget
+# update dpkg repositories AND install wget git nano
+RUN apt-get update && apt-get install -y wget git nano && apt-get clean
 
 # get maven 3.5.4
 RUN wget -O /tmp/apache-maven-3.5.4.tar.gz http://mirror.bit.edu.cn/apache/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz
 
-# install maven
+# Install maven
 RUN tar xzf /tmp/apache-maven-3.5.4.tar.gz -C /opt/ && ln -s /opt/apache-maven-3.5.4 /opt/maven && ln -s /opt/maven/bin/mvn /usr/local/bin
 ADD settings.xml /opt/apache-maven-3.5.4/conf/
 ENV MAVEN_HOME /opt/maven
 
-# install git nano
-RUN apt-get install -y git nano && apt-get clean
+# Install Java.
+RUN \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java8-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk8-installer
 
-# set shell variables for java installation
-ENV java_version 1.8.0_172
-ENV filename jdk-8u172-linux-x64.tar.gz
-ENV downloadlink http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/$filename
-
-# download java, accepting the license agreement
-RUN wget --header "Cookie: oraclelicense=accept-securebackup-cookie" -O /tmp/$filename $downloadlink 
-
-# unpack java
-RUN mkdir /opt/java-oracle && tar -zxf /tmp/$filename -C /opt/java-oracle/
-ENV JAVA_HOME /opt/java-oracle/jdk$java_version
-ENV PATH $JAVA_HOME/bin:$PATH
-
-# configure symbolic links for the java and javac executables
-RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 && update-alternatives --install /usr/bin/javac javac $JAVA_HOME/bin/javac 20000
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 # copy jenkins war file to the container
 ADD https://mirrors.tuna.tsinghua.edu.cn/jenkins/war-stable/latest/jenkins.war /opt/jenkins.war
